@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace MultidimensionalProbabilityDistribution
+{
+	/// <summary>
+	/// The interface for any type can be compared in seperate dimensions.
+	/// </summary>
+	public interface IMultidimensionalComparable<in T>
+	{
+		/// <summary>
+		/// Compare this object with other in a multidimensional way.
+		/// result[i] lt 0 means this[i] lt other[i];
+		/// result[i] eq 0 means this[i] eq other[i];
+		/// result[i] gt 0 means this[i] gt other[i].
+		/// </summary>
+		int[] MultidimensionalCompareTo(T other);
+	}
+	/// <summary>
+	/// The inferface for any comparer that compares two objects in seperate dimensions.
+	/// </summary>
+	public interface IMultidimensionalComparer<in T>
+	{
+		/// <summary>
+		/// Compare two objects in a multidimensional way.
+		/// result[i] lt 0 means x[i] lt y[i];
+		/// result[i] eq 0 means x[i] eq y[i];
+		/// result[i] gt 0 means x[i] gt y[i].
+		/// </summary>
+		int[] MultidimensionalCompare(T x,T y);
+	}
+	public static class MultidimensionalComparable
+	{
+		public static int[] MultidimensionalCompareTo<T>(this IComparable<T> me,T other)
+		{
+			return new int[] { me.CompareTo(other) };
+		}
+		public static int[] MultidimensionalCompare<T>(this IComparer<T> me,T x,T y)
+		{
+			return new int[] { me.Compare(x,y) };
+		}
+	}
+}
